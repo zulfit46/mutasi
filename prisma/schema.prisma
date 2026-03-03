@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Mutasi Masuk - Students transferring INTO SMKN 1 Palopo
+model MutasiMasuk {
+  id              String   @id @default(cuid())
+  namaSiswa       String
+  nisn            String
+  asalSekolah     String
+  kelasTujuan     String
+  jurusan         String
+  alasan          String
+  tanggalPengajuan DateTime @default(now())
+  tanggalDiterima DateTime?
+  status          String   @default("pending") // pending, diterima, ditolak
+  catatan         String?
+  noTeleponOrtu   String?
+  alamat          String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// Mutasi Keluar - Students transferring OUT from SMKN 1 Palopo
+model MutasiKeluar {
+  id              String   @id @default(cuid())
+  nipd            String
+  nisn            String
+  nama            String
+  tempatLahir     String
+  tglLahir        String
+  rombel          String
+  ketMutasi       String   // keterangan mutasi
+  pindahKe        String   // sekolah tujuan
+  tglMutasi       String
+  alasanMutasi    String
+  uploadBerkas    String?  // file path or base64
+  status          String   @default("pending") // pending, disetujui, ditolak
+  catatan         String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
